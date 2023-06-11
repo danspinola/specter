@@ -2,16 +2,26 @@
  * @type {import('prettier').Options}
  */
 module.exports = {
-  printWidth: 80,
-  tabWidth: 2,
-  useTabs: false,
-  semi: false,
-  singleQuote: false,
-  trailingComma: "none",
+  arrowParens: "avoid",
+  bracketSameLine: false,
   bracketSpacing: true,
-  bracketSameLine: true,
-  plugins: [require.resolve("@plasmohq/prettier-plugin-sort-imports")],
+  embeddedLanguageFormatting: "auto",
+  htmlWhitespaceSensitivity: "css",
   importOrder: ["^@plasmohq/(.*)$", "^~(.*)$", "^[./]"],
   importOrderSeparation: true,
-  importOrderSortSpecifiers: true
+  importOrderSortSpecifiers: true,
+  insertPragma: false,
+  jsxSingleQuote: false,
+  plugins: [require.resolve("@plasmohq/prettier-plugin-sort-imports")],
+  printWidth: 80,
+  proseWrap: "preserve",
+  quoteProps: "as-needed",
+  requirePragma: false,
+  semi: true,
+  singleAttributePerLine: false,
+  singleQuote: true,
+  tabWidth: 2,
+  trailingComma: "es5",
+  useTabs: false,
+  vueIndentScriptAndStyle: false
 }
