@@ -6,4 +6,5 @@ export const commonConfig: Partial<PlasmoCSConfig> = {
         "https://dashingdon.com/play/*",
         "https://moody.ink/play/*",
     ],
+	run_at: "document_end",
 }
