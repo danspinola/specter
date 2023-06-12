@@ -1,42 +1,46 @@
 {
-  "name": "specter",
-  "displayName": "Specter",
-  "version": "0.0.1",
-  "description": "A sleek and reliable debugging extension for Dashingdon's ChoiceScript gamebooks.",
-  "author": "Daniel Spinola",
-  "homepage": "",
-  "scripts": {
-    "dev": "plasmo dev",
-    "build": "plasmo build",
-    "package": "plasmo package",
-    "dist": "plasmo build --zip --build-path=./dist"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
-    "@fontsource/roboto": "^4.5.8",
-    "@mui/icons-material": "^5.11.16",
-    "@mui/material": "^5.12.2",
-    "antd": "^5.6.1",
-    "plasmo": "0.69.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
-  },
-  "devDependencies": {
-    "@plasmohq/prettier-plugin-sort-imports": "3.6.4",
-    "@types/chrome": "0.0.227",
-    "@types/node": "18.15.11",
-    "@types/react": "18.0.32",
-    "@types/react-dom": "18.0.11",
-    "prettier": "2.8.7",
-    "typescript": "5.0.3"
-  },
-  "manifest": {
-    "permissions": [
-      "scripting"
-    ],
-    "host_permissions": [
-      "https://*/*"
-    ]
-  }
+    "name": "specter",
+    "displayName": "Specter",
+    "version": "0.0.1",
+    "description": "A sleek and reliable debugging extension for Dashingdon's ChoiceScript gamebooks.",
+    "author": "Daniel Spinola",
+    "homepage": "",
+	"license": "MIT",
+    "scripts": {
+        "dev": "plasmo dev",
+        "build": "plasmo build",
+        "package": "plasmo package",
+        "dist": "plasmo build --zip --build-path=./dist"
+    },
+    "dependencies": {
+        "@ant-design/cssinjs": "^1.10.1",
+        "@emotion/react": "^11.10.6",
+        "@emotion/styled": "^11.10.6",
+        "@fontsource/roboto": "^4.5.8",
+        "@mui/icons-material": "^5.11.16",
+        "@mui/material": "^5.12.2",
+        "antd": "^5.6.1",
+        "plasmo": "0.69.1",
+        "react": "18.2.0",
+        "react-dom": "18.2.0"
+    },
+    "devDependencies": {
+        "@plasmohq/prettier-plugin-sort-imports": "3.6.4",
+        "@types/chrome": "0.0.227",
+        "@types/node": "18.15.11",
+        "@types/react": "18.0.32",
+        "@types/react-dom": "18.0.11",
+        "prettier": "2.8.7",
+        "typescript": "5.0.3"
+    },
+    "manifest": {
+        "permissions": [
+            "scripting"
+        ],
+        "host_permissions": [
+			"http://localhost:52330/?id=*",
+			"https://dashingdon.com/play/*",
+			"https://moody.ink/play/*"
+        ]
+    }
 }
