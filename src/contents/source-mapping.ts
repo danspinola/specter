@@ -1,14 +1,14 @@
 console.log("[SPECTER] Inject source-mapping");
 
-import { commonConfig } from "./config";
+import { commonConfig } from "../utils/config";
 
 import type { PlasmoCSConfig } from "plasmo";
 import type { MyWindow } from "./contents";
 
 export const config: PlasmoCSConfig = {
 	...commonConfig,
-	world: "MAIN"
-}
+    world: 'MAIN',
+};
 
 declare class Scene { [k: string]: any }
 
