@@ -1,44 +1,48 @@
-import { CodeOutlined } from '@ant-design/icons';
-import { Button, Space, Tooltip } from 'antd';
+import { Button, type ButtonProps, Space } from 'antd';
 import React from 'react';
+
+import { CodeIcon } from '~components/icons';
+import { CONSTANTS } from '~components/icons/utils';
+
+type TOption = {
+    content: any;
+    props: ButtonProps;
+    key: string;
+};
 
 const btnStyle = {
     color: 'white',
 };
 
-const opts: Array<{
-    type?: 'default' | 'link' | 'text' | 'ghost' | 'primary' | 'dashed';
-    content: any;
-    hint: string;
-    key?: string;
-    color?: string;
-    action?: (...args) => void;
-}> = [
+const spaceStyle = {
+    display: 'flex',
+    alignItems: 'center',
+};
+
+const opts: TOption[] = [
     {
-        content: <CodeOutlined rev />,
-        hint: 'View code.',
+        content: (
+            <CodeIcon
+                width="1.5rem"
+                height="1.5rem"
+                fill={CONSTANTS.lightGrey}
+            />
+        ),
+        props: {
+            type: 'text',
+            onClick: () => void console.log('cliquei view-code'),
+        },
         key: 'view-code',
-		action: () => void console.log("cliquei view-code")
     },
 ];
 
 export default function MyMenu() {
     return (
-        <Space wrap>
+        <Space style={spaceStyle} wrap>
             {opts.map(opt => (
-                <Tooltip
-                    title={opt.hint}
-                    color={opt.color || '#8237f2'}
-                    key={opt.key || undefined}
-                >
-                    <Button
-                        type={opt.type || 'text'}
-                        style={btnStyle}
-                        onClick={opt.action}
-                    >
-                        {opt.content}
-                    </Button>
-                </Tooltip>
+                <Button key={opt.key} style={btnStyle} {...opt.props}>
+                    {opt.content}
+                </Button>
             ))}
         </Space>
     );

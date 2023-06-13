@@ -5,7 +5,7 @@
     "description": "A sleek and reliable debugging extension for Dashingdon's ChoiceScript gamebooks.",
     "author": "Daniel Spinola",
     "homepage": "",
-	"license": "MIT",
+    "license": "MIT",
     "scripts": {
         "dev": "plasmo dev",
         "build": "plasmo build",
@@ -38,9 +38,9 @@
             "scripting"
         ],
         "host_permissions": [
-			"http://localhost:52330/?id=*",
-			"https://dashingdon.com/play/*",
-			"https://moody.ink/play/*"
+            "http://localhost:52330/?id=*",
+            "https://dashingdon.com/play/*",
+            "https://moody.ink/play/*"
         ]
     }
 }
