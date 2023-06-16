@@ -19,6 +19,7 @@ export class SourceMappingView {
 		this.btnContainer.appendChild(this.returnToGameBtn);
 
 		this.codeContainer = document.createElement('div');
+		this.codeContainer.dataset.specter = "true";
 
 		this.mount();
 	}
@@ -32,8 +33,6 @@ export class SourceMappingView {
 	}
 
 	makeDisplayCodeBtn(): HTMLButtonElement {
-		// @ts-ignore
-		window.TEST = CodeIcon;
 		return createElement({
 			tagName: "button",
 			props: {
@@ -86,7 +85,8 @@ export class SourceMappingView {
 	displayCode(event) {
 		// @ts-ignore
 		const main = window.main;
-		main.style.display = 'none';
+
+		[...document.querySelectorAll("[data-specter]"), main].forEach(div => (div as any).style.display = "none");
 		this.codeContainer.innerHTML = "";
 		this.codeContainer.style.display = "block";
 
@@ -104,9 +104,11 @@ export class SourceMappingView {
 	returnToGame(event) {
 		// @ts-ignore
 		const main = window.main;
-		main.style.display = 'block';
+
+		[...document.querySelectorAll("[data-specter]"), main].forEach(div => (div as any).style.display = "none");
 		this.codeContainer.innerHTML = "";
-		this.codeContainer.style.display = "none";
+
+		main.style.display = 'block';
 
 		// toggle buttons
 		this.displayCodeBtn.style.display = "inline-flex";
