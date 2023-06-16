@@ -6,7 +6,7 @@ export class SourceMappingView {
 	displayCodeBtn: HTMLButtonElement;
 	returnToGameBtn: HTMLButtonElement;
 	btnContainer: HTMLDivElement;
-	tempContainer: HTMLDivElement;
+	codeContainer: HTMLDivElement;
 
 	constructor() {
 		this.displayCodeBtn = this.makeDisplayCodeBtn();
@@ -18,14 +18,17 @@ export class SourceMappingView {
 		this.btnContainer.appendChild(this.displayCodeBtn);
 		this.btnContainer.appendChild(this.returnToGameBtn);
 
-		this.tempContainer = document.createElement('div');
+		this.codeContainer = document.createElement('div');
 
 		this.mount();
 	}
 
 	mount() {
 		const menu: HTMLParagraphElement = document.querySelector("#buttons");
-		menu.append(this.btnContainer);
+		menu.appendChild(this.btnContainer);
+
+		// @ts-ignore
+		document.querySelector("#container1").appendChild(this.codeContainer);
 	}
 
 	makeDisplayCodeBtn(): HTMLButtonElement {
@@ -82,14 +85,15 @@ export class SourceMappingView {
 
 	displayCode(event) {
 		// @ts-ignore
-		[...window.main.children].forEach(c => this.tempContainer.appendChild(c));
+		const main = window.main;
+		main.style.display = 'none';
+		this.codeContainer.innerHTML = "";
+		this.codeContainer.style.display = "block";
 
-		// @ts-ignore
-		window.main.innerHTML = "";
-		const mark = Number((this.tempContainer.querySelector("#text span") as HTMLElement).dataset.line || 0)
+		const mark = Number((main.querySelector("#text span") as HTMLElement)?.dataset.line || 0)
 		const codeView = this.generateCodeView(mark);
 		// @ts-ignore
-		window.main.appendChild(codeView);
+		this.codeContainer.appendChild(codeView);
 		codeView.querySelector("mark")?.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
 
 		// toggle buttons
@@ -99,9 +103,10 @@ export class SourceMappingView {
 
 	returnToGame(event) {
 		// @ts-ignore
-		window.main.innerHTML = "";
-		// @ts-ignore
-		[...this.tempContainer.children].forEach(c => window.main.appendChild(c));
+		const main = window.main;
+		main.style.display = 'block';
+		this.codeContainer.innerHTML = "";
+		this.codeContainer.style.display = "none";
 
 		// toggle buttons
 		this.displayCodeBtn.style.display = "inline-flex";
