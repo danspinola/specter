@@ -15,11 +15,13 @@ export class SourceMappingView {
 		this.returnToGameBtn = this.makeReturnToGameBtn();
 
 		this.btnContainer = document.createElement('div');
+		this.btnContainer.style.display = "inline-block"
 		this.btnContainer.appendChild(this.displayCodeBtn);
 		this.btnContainer.appendChild(this.returnToGameBtn);
 
 		this.codeContainer = document.createElement('div');
 		this.codeContainer.dataset.specter = "true";
+		this.codeContainer.id = "specter-code-container";
 
 		this.mount();
 	}
@@ -27,9 +29,6 @@ export class SourceMappingView {
 	mount() {
 		const menu: HTMLParagraphElement = document.querySelector("#buttons");
 		menu.appendChild(this.btnContainer);
-
-		// @ts-ignore
-		document.querySelector("#container1").appendChild(this.codeContainer);
 	}
 
 	makeDisplayCodeBtn(): HTMLButtonElement {
@@ -83,6 +82,9 @@ export class SourceMappingView {
 	}
 
 	displayCode(event) {
+		// @ts-ignore
+		document.querySelector("#container1").appendChild(this.codeContainer);
+
 		// @ts-ignore
 		const main = window.main;
 
