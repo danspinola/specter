@@ -1,0 +1,171 @@
+import { createElement } from "~utils";
+import { CodeIcon, PlayIcon } from "~utils/icons";
+
+export class SourceMappingView {
+
+	displayCodeBtn: HTMLButtonElement;
+	returnToGameBtn: HTMLButtonElement;
+	btnContainer: HTMLDivElement;
+	tempContainer: HTMLDivElement;
+
+	constructor() {
+		this.displayCodeBtn = this.makeDisplayCodeBtn();
+		this.displayCodeBtn.style.display = "inline-flex";
+
+		this.returnToGameBtn = this.makeReturnToGameBtn();
+
+		this.btnContainer = document.createElement('div');
+		this.btnContainer.appendChild(this.displayCodeBtn);
+		this.btnContainer.appendChild(this.returnToGameBtn);
+
+		this.tempContainer = document.createElement('div');
+
+		this.mount();
+	}
+
+	mount() {
+		const menu: HTMLParagraphElement = document.querySelector("#buttons");
+		menu.append(this.btnContainer);
+	}
+
+	makeDisplayCodeBtn(): HTMLButtonElement {
+		// @ts-ignore
+		window.TEST = CodeIcon;
+		return createElement({
+			tagName: "button",
+			props: {
+				className: "spacedLink",
+				style: {
+					display: "none",
+					alignItems: "center",
+					justifyContent: "center",
+				},
+				innerHTML: `
+					${CodeIcon}
+					<span 
+						style="
+							weight: bold; 
+							padding-inline: 4px;
+						"
+					>|</span>
+					View Code
+				`,
+				onclick: e => this.displayCode(e)
+			},
+		}) as HTMLButtonElement;
+	}
+
+	makeReturnToGameBtn(): HTMLButtonElement {
+		return createElement({
+			tagName: "button",
+			props: {
+				className: "spacedLink",
+				style: {
+					display: "none",
+					alignItems: "center",
+					justifyContent: "center",
+				},
+				innerHTML: `
+					${PlayIcon}
+					<span 
+						style="
+							weight: bold; 
+							padding-inline: 4px;
+						"
+					>|</span>
+					Return to the Game
+				`,
+				onclick: e => this.returnToGame(e)
+			},
+		}) as HTMLButtonElement;
+	}
+
+	displayCode(event) {
+		// @ts-ignore
+		[...window.main.children].forEach(c => this.tempContainer.appendChild(c));
+
+		// @ts-ignore
+		window.main.innerHTML = "";
+		const mark = Number((this.tempContainer.querySelector("#text span") as HTMLElement).dataset.line || 0)
+		const codeView = this.generateCodeView(mark);
+		// @ts-ignore
+		window.main.appendChild(codeView);
+		codeView.querySelector("mark")?.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+
+		// toggle buttons
+		this.displayCodeBtn.style.display = 'none';
+		this.returnToGameBtn.style.display = "inline-flex";
+	}
+
+	returnToGame(event) {
+		// @ts-ignore
+		window.main.innerHTML = "";
+		// @ts-ignore
+		[...this.tempContainer.children].forEach(c => window.main.appendChild(c));
+
+		// toggle buttons
+		this.displayCodeBtn.style.display = "inline-flex";
+		this.returnToGameBtn.style.display = "none";
+	}
+
+	generateCodeView(mark?: number) {
+		// @ts-ignore
+		let lines = window.stats.scene.lines;
+
+		const codeContainer = document.createElement('div');
+		codeContainer.style.maxHeight = '400px';
+		codeContainer.style.overflow = 'auto';
+
+		const codeList = document.createElement('ol');
+		codeList.style.listStyleType = 'none';
+		codeList.style.padding = '0';
+		codeList.style.margin = '0';
+		codeList.style.fontFamily = 'monospace';
+
+		for (let i = 0; i < lines.length; i++) {
+			let displayIndex = i + 1;
+
+			const codeItem = document.createElement('li');
+			codeItem.style.padding = '0.5em 0';
+
+			const codeLine = document.createElement('code');
+			codeLine.innerHTML = this.wrapLine(lines[i]);
+
+			const codePre = document.createElement('pre');
+			codePre.style.margin = "0";
+			codePre.style.display = "inline";
+			codePre.appendChild(codeLine);
+			
+			if (mark && mark === i) {
+				const markEl = document.createElement('mark');
+				markEl.appendChild(codePre);
+				codeItem.appendChild(markEl);
+			} else {
+				codeItem.appendChild(codePre);
+			}
+
+
+			const lineNumber = document.createElement('span');
+			lineNumber.style.display = 'inline-block';
+			lineNumber.style.width = '30px';
+			lineNumber.style.textAlign = 'right';
+			lineNumber.style.marginRight = '0.5em';
+			lineNumber.textContent = String(displayIndex);
+
+			codeItem.prepend(lineNumber);
+			codeList.appendChild(codeItem);
+		}
+
+		codeContainer.appendChild(codeList);
+		return codeContainer;
+	}
+
+	wrapLine(line: string) {
+		return line.split(" ").reduce((acc, cur, idx) => {
+			if ((idx + 1) % 12 === 0) acc += "<br>"
+			acc += " " + cur;
+			return acc;
+		}, "");
+	}
+}
+
