@@ -11,6 +11,7 @@ export const config: PlasmoCSConfig = {
 
 // const w: MyWindow = window;
 
+// @ts-ignore
 window.clearScreen = clearScreen;
 
 (document.querySelector("#taglines") as any).style.display = "none";
@@ -18,7 +19,7 @@ window.clearScreen = clearScreen;
 SourceMappingModel.init();
 const sourceMappingView = new SourceMappingView();
 
-// const scopeWatchView = new ScopeWatchView();
+const scopeWatchView = new ScopeWatchView();
 
 console.log("[SPECTER]");
 
